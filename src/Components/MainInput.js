@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TextInput } from "react-native";
+import { View, TextInput } from "react-native";
 import { FontAwesome } from '@expo/vector-icons';
 import Colors from '../data/color'
 export default function MainInput(props) {
@@ -35,7 +35,6 @@ export default function MainInput(props) {
           },
           shadowOpacity: 0.23,
           shadowRadius: 2.62,
-
           elevation: 4,
         }}
         placeholder={placeholder}

@@ -1,14 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View,TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Colors from '../data/color'
 import MainButton from '../Components/MainButton';
 import MainInput from '../Components/MainInput';
 export default function RegisterScreen({ navigation }) {
-    const [name, setname] = useState('');
-    const [email, setemail] = useState('');
-    const [password, setpassword] = useState('');
-    const [repassword, setrepassword] = useState('');
-    return(
+  const [name, setname] = useState('');
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  const [phone, setphone] = useState('');
+  return(
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Image
           source={require('../../assets/cover.png')}
@@ -31,18 +32,18 @@ export default function RegisterScreen({ navigation }) {
               onChangeText={setemail}
             />
             <MainInput
+              nameIcon={"phone"}
+              placeholder={'Nhập số điện thoại'}
+              value={phone}
+              secureTextEntry={true}
+              onChangeText={setphone}
+            />
+            <MainInput
               nameIcon={"lock"}
               placeholder={'Nhập mật khẩu'}
               value={password}
               secureTextEntry={true}
               onChangeText={setpassword}
-            />
-            <MainInput
-              nameIcon={"lock"}
-              placeholder={'Nhập lại mật khẩu'}
-              value={repassword}
-              secureTextEntry={true}
-              onChangeText={setrepassword}
             />
             <MainButton
               style={{ 
@@ -61,6 +62,7 @@ export default function RegisterScreen({ navigation }) {
             />
         </View>
       </View>
+      </TouchableWithoutFeedback>
   );
 }
 

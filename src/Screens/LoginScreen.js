@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import Colors from '../data/color'
 import MainButton from '../Components/MainButton';
 import MainInput from '../Components/MainInput';
@@ -7,6 +7,7 @@ export default function LoginScreen({ navigation }) {
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   return(
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
         <Image
           source={require('../../assets/cover.png')}
@@ -46,13 +47,14 @@ export default function LoginScreen({ navigation }) {
                 elevation: 4, 
               }}
               title={'Đăng Nhập'}
-              // onPress={goToHome}
+              onPress={() => navigation.navigate('HomeTab')}
             />
             <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
               <Text style={styles.Register}>Đăng ký</Text>
             </TouchableOpacity>
         </View>
       </View>
+    </TouchableWithoutFeedback>
   );
 }
 
