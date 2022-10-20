@@ -1,13 +1,59 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View,TouchableWithoutFeedback, Keyboard } from 'react-native';
+import { StyleSheet, Image, Text, View,TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native';
 import Colors from '../data/color'
 import MainButton from '../Components/MainButton';
 import MainInput from '../Components/MainInput';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function RegisterScreen({ navigation }) {
   const [name, setname] = useState('');
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   const [phone, setphone] = useState('');
+  const onSignUp = () => {
+    if (name.trim() == "" || !name) {
+      alert("Không được để trống họ và tên !");
+    } else if (phone.trim() == "" || !phone) {
+      alert("Không được để trống email !");
+    } else if (email.trim() == "" || !email) {
+      alert("Không được để trống email !");
+    } else if (password.trim() == "" || !password) {
+      alert("Không được để trống mật khẩu !");
+    } else {
+      createAccount();
+    }
+  };
+  const createAccount = async () => {
+    let userData = await AsyncStorage.getItem("userData");
+    if (userData) {
+      userData = JSON.parse(userData);
+      let arr = [...userData];
+      arr = arr.filter(
+        (value) => value.email.toLocaleLowerCase() == email.toLocaleLowerCase()
+      );
+      if (arr.length > 0) {
+        alert("Email đã tồn tại!");
+        return;
+      } else {
+        userData.push({
+          name: name.trim(),
+          phone: phone.trim(),
+          email: email.trim(),
+          password: password.trim(),
+        });
+      }
+    } else {
+      userData = [];
+      userData.push({
+        name: name.trim(),
+        phone: phone.trim(),
+        email: email.trim(),
+        password: password.trim(),
+      });
+    }
+    AsyncStorage.setItem("userData", JSON.stringify(userData));
+    alert("Đăng ký thành công!");
+    navigation.goBack();
+  };
   return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <View style={styles.container}>
@@ -26,17 +72,17 @@ export default function RegisterScreen({ navigation }) {
                 onChangeText={setname}
             />
             <MainInput
-              nameIcon={"envelope"}
-              placeholder={'Nhập email'}
-              value={email}
-              onChangeText={setemail}
-            />
-            <MainInput
               nameIcon={"phone"}
               placeholder={'Nhập số điện thoại'}
               value={phone}
               secureTextEntry={true}
               onChangeText={setphone}
+            />
+            <MainInput
+              nameIcon={"envelope"}
+              placeholder={'Nhập email'}
+              value={email}
+              onChangeText={setemail}
             />
             <MainInput
               nameIcon={"lock"}
@@ -59,7 +105,11 @@ export default function RegisterScreen({ navigation }) {
                 elevation: 4, 
               }}
               title={'Đăng ký'}
+              onPress={onSignUp}
             />
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+              <Text style={styles.Login}>Quay lại đăng nhập</Text>
+            </TouchableOpacity>
         </View>
       </View>
       </TouchableWithoutFeedback>
@@ -93,4 +143,9 @@ const styles = StyleSheet.create({
     textShadowOffset: {width: -1, height: 1},
     textShadowRadius: 5
   },
+  Login: {
+    height: 30,
+    marginTop: 30,
+    color: Colors.main,
+  }
 });

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Image, Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard, Alert } from 'react-native';
+import { StyleSheet, Image, Text, View, TouchableOpacity, TouchableWithoutFeedback, Keyboard} from 'react-native';
 import Colors from '../data/color'
 import MainButton from '../Components/MainButton';
 import MainInput from '../Components/MainInput';
@@ -7,24 +7,41 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const setData = async () => {
-      if (email.length == 0 || password.length == 0) {
-          Alert.alert('Warning!', 'Hãy nhập thông tin đăng nhập của bạn!')
-      } else {
-          try {
-              var user = {
-                  Email: email,
-                  Password: password,
-              }
-              await AsyncStorage.setItem('UserData', JSON.stringify(user));
-              Alert.alert('Tạo thông tin đăng nhập thành công!')
-              navigation.navigate('HomeTab');
-          } catch (error) {
-              console.log(error);
-          }
-      }
-  }
+  const goToHome = () => {
+    if (email.trim() == '' || !email) {
+      alert('Không được để trống email !');
+    } else if (password.trim() == '' || !password) {
+      alert('Không được để trống mật khẩu !');
+    } else {
+      login();
+    }
+  };
+  const login = async () => {
+    let userData = await AsyncStorage.getItem('userData');
+    if (userData) {
+      userData = JSON.parse(userData);
+      let arr = [...userData];
+      arr = arr.filter(
+        (value) =>
+          value.email.toLocaleLowerCase() == email.toLocaleLowerCase() &&
+          value.password == password
+      );
+      if (arr.length > 0) {
+        let curUser = arr[0];
+        AsyncStorage.setItem('curUser', JSON.stringify(curUser));
+        navigation.replace('HomeTab');
+      } else alert('Email hoặc mật khẩu không chính xác!');
+    } else {
+      alert('Email hoặc mật khẩu không chính xác!');
+    }
+  };
+  const checkLogin = async () => {
+    let userData = await AsyncStorage.getItem('curUser');
+    if (userData) navigation.replace('HomeTab');
+  };
+  useEffect(() => {
+    checkLogin();
+  }, []);
 
   return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -65,7 +82,7 @@ export default function LoginScreen({ navigation }) {
                 elevation: 4, 
               }}
               title={'Đăng Nhập'}
-              onPress={setData}
+              onPress={goToHome}
             />
             <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
               <Text style={styles.Register}>Đăng ký</Text>
