@@ -5,8 +5,8 @@ import Colors from '../data/color'
 export default function MainInput(props) {
   const {
     nameIcon,
-    value,
     onChangeText,
+    value,
     placeholder,
     onEndEditing,
     secureTextEntry,

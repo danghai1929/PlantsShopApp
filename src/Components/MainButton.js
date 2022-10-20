@@ -2,7 +2,7 @@ import React from "react";
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import Colors from '../data/color'
 export default function MainButton(props) {
-  const { title, onPress, style, isSubButton } = props;
+  const { title, onPress, style, isSubButton, onPressFunc } = props;
 
   return (
     <TouchableOpacity
