@@ -32,8 +32,8 @@ export default function HomeScreen({ navigation }){
                     <ScrollView>
                         {
                             plants.map(plant => (
-                                <TouchableOpacity>
-                                    <View key = {plant.id} style = {styles.item}>
+                                <TouchableOpacity key = {plant.id}>
+                                    <View  style = {styles.item}>
                                         <Image style={styles.plantimage} source={{uri:plant.image}}/>
                                         <View style={styles.flashdetail}>
                                             <Text style={styles.plantname}>{plant.name}</Text>
