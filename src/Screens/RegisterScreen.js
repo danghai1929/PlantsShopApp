@@ -79,7 +79,6 @@ export default function RegisterScreen({ navigation }) {
               nameIcon={"phone"}
               placeholder={'Nhập số điện thoại'}
               value={phone}
-              secureTextEntry={true}
               onChangeText={setphone}
             />
             <MainInput
