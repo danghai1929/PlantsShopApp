@@ -21,27 +21,16 @@ export default function LoginScreen({ navigation }) {
   const login = async () => {
     fetch(`http://192.168.43.40:3000/users/${email}`)
           .then((response) => response.json())
-          .then((data) =>{ if (data.email.toLocaleLowerCase() && data.password == password) {
-                let curUser = data;
+          .then((data) =>{ 
+            if (data.email.toLocaleLowerCase() == email && data.password == password) {
+              let curUser = data;
                 AsyncStorage.setItem('curUser', JSON.stringify(curUser));
                 navigation.replace('HomeTab');
-              } else alert('Email hoặc mật khẩu không chính xác!');})
+            } else alert('Email hoặc mật khẩu không chính xác!');})
           .catch(error => {
             setError(error) 
             alert('Đăng nhập thất bại!')
           });
-    // let userData = user;
-    // console.log(userData);
-    // console.log(error.toString().length)
-    // if (error.toString()) {
-    //   if (userData.email.toLocaleLowerCase() && userData.password == password) {
-    //     let curUser = arr[0];
-    //     AsyncStorage.setItem('curUser', JSON.stringify(curUser));
-    //     navigation.replace('HomeTab');
-    //   } else alert('Email hoặc mật khẩu không chính xác!');
-    // } else {
-    //   alert('Email hoặc mật khẩu không chính xác!');
-    // }
   };
   const checkLogin = async () => {
     let userData = await AsyncStorage.getItem('curUser');

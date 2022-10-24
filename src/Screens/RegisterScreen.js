@@ -22,37 +22,41 @@ export default function RegisterScreen({ navigation }) {
       createAccount();
     }
   };
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({
+    'name': name,
+    'phone': phone,
+    'email': email,
+    'password': password
+  });
+
+  var requestOptions = {
+    method: 'POST',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  };
   const createAccount = async () => {
-    let userData = await AsyncStorage.getItem("userData");
-    if (userData) {
-      userData = JSON.parse(userData);
-      let arr = [...userData];
-      arr = arr.filter(
-        (value) => value.email.toLocaleLowerCase() == email.toLocaleLowerCase()
-      );
-      if (arr.length > 0) {
-        alert("Email đã tồn tại!");
-        return;
-      } else {
-        userData.push({
-          name: name.trim(),
-          phone: phone.trim(),
-          email: email.trim(),
-          password: password.trim(),
-        });
-      }
-    } else {
-      userData = [];
-      userData.push({
-        name: name.trim(),
-        phone: phone.trim(),
-        email: email.trim(),
-        password: password.trim(),
-      });
-    }
-    AsyncStorage.setItem("userData", JSON.stringify(userData));
-    alert("Đăng ký thành công!");
-    navigation.goBack();
+    fetch(`http://192.168.43.40:3000/users/${email}`)
+          .then((response) => response.json())
+          .then((data) =>{ 
+            if (data.email.toLocaleLowerCase() == email) {
+              alert('Email đã tồn tại!')
+              return;
+            }
+          })
+          .catch(error => {
+            console.log(error) 
+            fetch(`http://192.168.43.40:3000/users/`,requestOptions)
+                .then(res => res.json())
+                .then(resData => {
+                  alert("Đăng ký thành công!")
+                  navigation.goBack();
+                })
+                .catch(error => alert("Đăng ký thất bại!"));
+          });  
   };
   return(
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
