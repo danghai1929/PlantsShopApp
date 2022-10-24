@@ -21,6 +21,7 @@ export default function MainInput(props) {
       </View>
       <TextInput
         secureTextEntry={secureTextEntry}
+        autoComplete="off"
         style={{
           backgroundColor: "#f4f4f4",
           paddingVertical: 7,

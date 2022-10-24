@@ -1,12 +1,15 @@
-import { View, Text, TextInput, StyleSheet,TouchableWithoutFeedback, Keyboard } from "react-native"
+import { View, Text, TextInput, StyleSheet,TouchableWithoutFeedback, Keyboard, ScrollView, Image, TouchableOpacity } from "react-native"
 import { FontAwesome } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import Colors from '../data/color'
 export default function HomeScreen({ navigation }){
-    const [plantID, setplantID] = useState('')
-    const [plantName, setplantName] = useState('')
-    const [plantDescription, setplantDescription] = useState('')
-    const [plantPrice, setplantPrice] = useState('')
+    const [plants, setplants] = useState([])
+    useEffect(() => {
+        fetch('http://192.168.43.40:3000/plants')
+          .then((response) => response.json())
+          .then((plants) => setplants(plants))
+          .catch((error) => console.error(error))
+      }, []);
     return(
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View style={styles.container}>
@@ -25,8 +28,22 @@ export default function HomeScreen({ navigation }){
                     />
                         <TextInput style={{...styles.searchInput, ...styles.shadow}} placeholder="Sen đá, xương rồng,..." placeholderTextColor={Colors.white}/>
                 </View>
-                <View>
-                    
+                <View style={{ height: 450, top: 100, left: 15,right: 15,position: 'absolute',}}>
+                    <ScrollView>
+                        {
+                            plants.map(plant => (
+                                <TouchableOpacity>
+                                    <View key = {plant.id} style = {styles.item}>
+                                        <Image style={styles.plantimage} source={{uri:plant.image}}/>
+                                        <View style={styles.flashdetail}>
+                                            <Text style={styles.plantname}>{plant.name}</Text>
+                                            <Text style={styles.plantprice}>{plant.price} đ</Text>
+                                        </View>
+                                    </View>
+                                </TouchableOpacity>
+                            ))
+                        }
+                    </ScrollView>
                 </View>
             </View>
         </TouchableWithoutFeedback>
@@ -69,4 +86,31 @@ const styles = StyleSheet.create({
         shadowRadius: 2.62,
         elevation: 4, 
     },
+    flashdetail: {
+        width: 150,
+        alignItems:"center",
+        justifyContent: 'center',    
+    },
+    item:{
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        paddingVertical: 7,
+        margin: 2,
+        borderColor: '#2a4944',
+        backgroundColor: Colors.white,
+        
+    },
+    plantimage: {
+        width: 80,
+        height: 80,
+    },
+    plantname:{
+        fontWeight: 'bold',
+        paddingVertical: 10,
+    },
+    plantprice: {
+        color: Colors.orange,
+        fontWeight: 'bold',
+    }
 });
