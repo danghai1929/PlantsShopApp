@@ -3,7 +3,6 @@ import { StyleSheet, Image, Text, View,TouchableWithoutFeedback, Keyboard, Touch
 import Colors from '../data/color'
 import MainButton from '../Components/MainButton';
 import MainInput from '../Components/MainInput';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function RegisterScreen({ navigation }) {
   const [name, setname] = useState('');
   const [email, setemail] = useState('');

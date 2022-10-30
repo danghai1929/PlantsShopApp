@@ -19,7 +19,7 @@ export default function LoginScreen({ navigation }) {
     }
   };
   const login = async () => {
-    fetch(`http://192.168.43.40:3000/users/${email}`)
+    fetch(`http://192.168.0.102:3000/users/${email}`)
           .then((response) => response.json())
           .then((data) =>{ 
             if (data.email.toLocaleLowerCase() == email && data.password == password) {

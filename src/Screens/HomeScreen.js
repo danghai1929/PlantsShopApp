@@ -5,7 +5,7 @@ import Colors from '../data/color'
 export default function HomeScreen({ navigation }){
     const [plants, setplants] = useState([])
     useEffect(() => {
-        fetch('http://192.168.43.40:3000/plants')
+        fetch('http://192.168.0.102:3000/plants')
           .then((response) => response.json())
           .then((plants) => setplants(plants))
           .catch((error) => console.error(error))
