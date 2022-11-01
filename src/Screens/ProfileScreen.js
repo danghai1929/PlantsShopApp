@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet,TouchableWithoutFeedback, Keyboard, Image, TouchableOpacity, SafeAreaView  } from "react-native"
+import { View, Text, StyleSheet, Image, TouchableOpacity} from "react-native"
 import { FontAwesome } from '@expo/vector-icons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, { useEffect, useState } from 'react';
@@ -20,33 +20,30 @@ export default function ProfileScreen({ navigation }){
     getUserinf()
   }, []);
   return(
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <View style={styles.container}>
-        <View style={{ ...styles.homeProfile}}>
-          <View style={{marginBottom: 25}}>
-            <Image style={{width: 125, height: 125, borderRadius: 100}} source={require('../../assets/avatar.jpg')}/>
-            <Text style={styles.name}> {user.name}</Text>
-            <Text style={styles.faxname}> @{user.name}</Text>
-          </View>
-          <View style={styles.item}>
-            <View style={styles.icon}>
-              <FontAwesome name="phone" size={24} color="black"/>
-            </View>
-            <Text  style={styles.itemName}> {user.phone}</Text>
-          </View>
-          <View style={styles.item}>
-            <View style={styles.icon}>
-              <FontAwesome name="envelope" size={24} color="black"/>
-            </View>
-            <Text  style={styles.itemName}> {user.email}</Text>
-          </View>
-            <TouchableOpacity onPress={Logout}>
-                <Text style={styles.LogoutButton}>Log out</Text>
-            </TouchableOpacity>
+    <View style={styles.container}>
+      <View style={styles.homeProfile}>
+        <View style={{marginBottom: 25}}>
+          <Image style={{width: 125, height: 125, borderRadius: 100}} source={require('../../assets/avatar.jpg')}/>
+          <Text style={styles.name}> {user.name}</Text>
+          <Text style={styles.faxname}> @{user.name}</Text>
         </View>
-        
-      </View>
-    </TouchableWithoutFeedback>
+        <View style={styles.item}>
+          <View style={styles.icon}>
+            <FontAwesome name="phone" size={24} color="black"/>
+          </View>
+          <Text  style={styles.itemName}> {user.phone}</Text>
+        </View>
+        <View style={styles.item}>
+          <View style={styles.icon}>
+            <FontAwesome name="envelope" size={24} color="black"/>
+          </View>
+          <Text  style={styles.itemName}> {user.email}</Text>
+        </View>
+          <TouchableOpacity onPress={Logout}>
+              <Text style={styles.LogoutButton}>Log out</Text>
+          </TouchableOpacity>
+      </View>     
+    </View>
   );
 }
 

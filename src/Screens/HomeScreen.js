@@ -2,6 +2,7 @@ import { View, Text, TextInput, StyleSheet,TouchableWithoutFeedback, Keyboard, S
 import { FontAwesome } from '@expo/vector-icons'
 import React, { useEffect, useState } from 'react'
 import Colors from '../data/color'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function HomeScreen({ navigation }){
     const [plants, setplants] = useState([])
     useEffect(() => {
@@ -29,10 +30,15 @@ export default function HomeScreen({ navigation }){
                         <TextInput style={{...styles.searchInput, ...styles.shadow}} placeholder="Sen đá, xương rồng,..." placeholderTextColor={Colors.white}/>
                 </View>
                 <View style={{ height: 450, top: 100, left: 15,right: 15,position: 'absolute',}}>
-                    <ScrollView>
+                    <ScrollView showsVerticalScrollIndicator={false}>
                         {
                             plants.map(plant => (
-                                <TouchableOpacity key = {plant.id}>
+                                <TouchableOpacity key = {plant.id} 
+                                    onPress={async ()=>{
+                                        await AsyncStorage.setItem('curPlant', JSON.stringify(plant));
+                                        navigation.navigate('PlantDetailScreen');
+                                    }}
+                                >
                                     <View  style = {styles.item}>
                                         <Image style={styles.plantimage} source={{uri:plant.image}}/>
                                         <View style={styles.flashdetail}>
