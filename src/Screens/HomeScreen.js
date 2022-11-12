@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }){
                     />
                         <TextInput style={{...styles.searchInput, ...styles.shadow}} placeholder="Sen đá, xương rồng,..." placeholderTextColor={Colors.white}/>
                 </View>
-                <View style={{ height: 450, top: 100, left: 15,right: 15,position: 'absolute',}}>
+                <View style={{ top: 100, left: 15,right: 15, bottom: 90 ,position: 'absolute',}}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         {
                             plants.map(plant => (

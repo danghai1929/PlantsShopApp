@@ -7,6 +7,8 @@ export default function ProfileScreen({ navigation }){
   const [user,setuser] = useState('')
   const Logout = async () => {
     await AsyncStorage.removeItem("curUser");
+    let cartData = [];
+    await AsyncStorage.setItem("cartData", JSON.stringify(cartData));
     navigation.reset({
       index: 0,
       routes: [{ name: "LoginScreen" }],

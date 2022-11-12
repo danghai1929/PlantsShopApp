@@ -39,7 +39,6 @@ export default function PlantDetailScreen({navigation}){
         });
     }
     AsyncStorage.setItem("cartData", JSON.stringify(cartData));
-    navigation.navigate("CartScreen");
     };
     return(
         <ScrollView style={{ backgroundColor: "#fff", flex: 1 }} showsVerticalScrollIndicator={false}>
