@@ -6,7 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export default function HomeScreen({ navigation }){
     const [plants, setplants] = useState([])
     useEffect(() => {
-        fetch('http://192.168.0.102:3000/plants')
+        fetch('http://192.168.0.103:3000/plants')
           .then((response) => response.json())
           .then((plants) => setplants(plants))
           .catch((error) => console.error(error))
@@ -29,7 +29,7 @@ export default function HomeScreen({ navigation }){
                     />
                         <TextInput style={{...styles.searchInput, ...styles.shadow}} placeholder="Sen đá, xương rồng,..." placeholderTextColor={Colors.white}/>
                 </View>
-                <View style={{ top: 100, left: 15,right: 15, bottom: 90 ,position: 'absolute',}}>
+                <View style={{ top: 105, left: 15,right: 15, bottom: 90 ,position: 'absolute',}}>
                     <ScrollView showsVerticalScrollIndicator={false}>
                         {
                             plants.map(plant => (
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         justifyContent: 'center',
         borderRadius: 15,
-        top: 12,
+        top: 22,
         left: 15,
         right: 15,
         position: 'absolute',

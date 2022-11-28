@@ -64,7 +64,7 @@ export default function CartItem(props) {
         </View>
         <View style={{ flexDirection: "row" }}>
           <View style={{ flex: 1 }}>
-            <Text style={{ fontSize: 11 }}>Price: {item.price} VND</Text>
+            <Text style={{ fontSize: 11 }}>Giá: {item.price} VND</Text>
           </View>
           <View style={{ alignItems: "center", flexDirection: "row" }}>
             <TouchableOpacity

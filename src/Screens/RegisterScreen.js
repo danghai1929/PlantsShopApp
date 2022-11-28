@@ -38,7 +38,7 @@ export default function RegisterScreen({ navigation }) {
     redirect: 'follow'
   };
   const createAccount = async () => {
-    fetch(`http://192.168.43.40:3000/users/${email}`)
+    fetch(`http://192.168.0.103:3000/users/${email}`)
           .then((response) => response.json())
           .then((data) =>{ 
             if (data.email.toLocaleLowerCase() == email) {
@@ -48,7 +48,7 @@ export default function RegisterScreen({ navigation }) {
           })
           .catch(error => {
             console.log(error) 
-            fetch(`http://192.168.43.40:3000/users/`,requestOptions)
+            fetch(`http://192.168.0.103:3000/users/`,requestOptions)
                 .then(res => res.json())
                 .then(resData => {
                   alert("Đăng ký thành công!")
